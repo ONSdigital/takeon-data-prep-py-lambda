@@ -1,6 +1,6 @@
 Data prep lambda in python.
 
-The following environment variables are required - 
+The environment variables required are  - 
 DATABASE_USER
 DATABASE_PASSWORD
 DATABASE_HOST
