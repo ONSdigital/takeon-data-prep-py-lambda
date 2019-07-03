@@ -4,6 +4,7 @@ import logging
 import json
 import boto3
 import os
+from base64 import b64decode
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -19,17 +20,22 @@ class DataPrep:
         self.instance = self.event["instance"]
         self.questionCode = "questionCode"
         self.response = "response"
-        self.db_user = os.getenv("DATABASE_USER")
-        self.db_pw = os.getenv("DATABASE_PASSWORD")
-        self.db_host = os.getenv("DATABASE_HOST")
-        self.db_name = os.getenv("DATABASE_NAME")
+        db_user_encr = os.getenv("DATABASE_USER")
+        self.db_user = boto3.client('kms').decrypt(CiphertextBlob=b64decode(db_user_encr))['Plaintext'].decode('ascii')
+        db_pw_encr = os.getenv("DATABASE_PASSWORD")
+        self.db_pw = boto3.client('kms').decrypt(CiphertextBlob=b64decode(db_pw_encr))['Plaintext'].decode('ascii')
+        db_host_encr = os.getenv("DATABASE_HOST")
+        self.db_host = boto3.client('kms').decrypt(CiphertextBlob=b64decode(db_host_encr))['Plaintext'].decode('ascii')
+        db_name_encr = os.getenv("DATABASE_NAME")
+        self.db_name = boto3.client('kms').decrypt(CiphertextBlob=b64decode(db_name_encr))['Plaintext'].decode('ascii')
         self.wrangler_lambda = os.getenv("WRANGLER_NAME")
+
 
     def get_qcode_resp_from_db(self):
 
-        # print(db_user)
-        # print(db_pw)
-        # print(db_host)
+        # print(self.db_user)
+        # print(self.db_pw)
+        # print(self.db_host)
         try:
             conn = psycopg2.connect(database=self.db_name,
                                     user=self.db_user,
