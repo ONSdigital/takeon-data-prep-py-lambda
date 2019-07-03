@@ -59,8 +59,6 @@ class DataPrep:
 
     def send_data_to_wrangler(self):
         try:
-
-            # print(wrangler_lambda)
             invoke_response = lambda_client.invoke(FunctionName="function:" + self.wrangler_lambda,
                                                    InvocationType='RequestResponse',
                                                    Payload=json.dumps(self.event))
