@@ -17,11 +17,12 @@ functions:
     role: ${file(./config.dev.json):ROLE}
     layers:
       - ${file(./config.dev.json):LAYER_NAME}
+    awsKmsKeyArn: 'arn:aws:kms:eu-west-2:014669633018:key/d2442b00-650f-4c9d-ae92-79c4af7b0427'
     environment:
-      DATABASE_USER: ${file(./config.dev.json):DB_USER}
-      DATABASE_PASSWORD: ${file(./config.dev.json):DB_PW}
-      DATABASE_HOST: ${file(./config.dev.json):DB_HOST}
-      DATABASE_NAME: ${file(./config.dev.json):DB_NAME}
+      DATABASE_USER: 'AQICAHji/U8521SFpwebFCqP2HT3JqZq7Bo3DNGEbwO4lu9COwGm6ybq/Gq2e80JA7KDCFWNAAAAaTBnBgkqhkiG9w0BBwagWjBYAgEAMFMGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMKw2LbXQfioAxoypYAgEQgCa0mMo9E3/aGY4UKw7z1rM1/dvE45UQdz82w7cG4fg6HRwslh0Xuw=='
+      DATABASE_PASSWORD: 'AQICAHji/U8521SFpwebFCqP2HT3JqZq7Bo3DNGEbwO4lu9COwFAItLMTH6b0Fx4ykH+ERo8AAAAdTBzBgkqhkiG9w0BBwagZjBkAgEAMF8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMYoWt9DBg/LHYHWbIAgEQgDKBRJeK4O/FJRm+cpoDc7ONTZp3kaluSzcrJuL5A4NKkoUMhbKFdHvH/AS96DkqWkO7LA=='
+      DATABASE_HOST: 'AQICAHji/U8521SFpwebFCqP2HT3JqZq7Bo3DNGEbwO4lu9COwFFyUCgwImmpYfY7nfSL52dAAAAljCBkwYJKoZIhvcNAQcGoIGFMIGCAgEAMH0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMrAsw9dexAAGYf/7YAgEQgFC5YVNMGHbsoKktu6FLhGYMBgELamnz5swJA5wBnHhtTNWUjpJZfz276YV+HW1TUd9cuNDjAlOJySU5Q5TT9vdNIGjoOO2K5c9+mVIgGzLyVg=='
+      DATABASE_NAME: 'AQICAHji/U8521SFpwebFCqP2HT3JqZq7Bo3DNGEbwO4lu9COwHSo0XXid7Vk8ehudLVmTo8AAAAajBoBgkqhkiG9w0BBwagWzBZAgEAMFQGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5TQ6v8cgqVPK8IHaAgEQgCeIy5oclFOx2f0ue8obzsek1PSfvTfrSGlUEmAES9Dkal9XkKzrhnM='
       WRANGLER_NAME: wrangler-lambda
     vpc:
       securityGroupIds:
