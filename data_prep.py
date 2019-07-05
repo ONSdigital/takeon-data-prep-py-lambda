@@ -59,10 +59,9 @@ class DataPrep:
 
     def send_data_to_wrangler(self):
         try:
-            invoke_response = lambda_client.invoke(FunctionName="function:" + self.wrangler_lambda,
-                                                   InvocationType='RequestResponse',
-                                                   Payload=json.dumps(self.event))
-            print(invoke_response)
+            lambda_client.invoke(FunctionName="function:" + self.wrangler_lambda,
+                                InvocationType='Event',
+                                Payload=json.dumps(self.event))
         except:
             logger.error("Error while calling wrangler-lambda")
 
