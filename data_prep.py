@@ -42,6 +42,7 @@ class DataPrep:
         self.questionCode = "questionCode"
         self.response = "response"
         self.wrangler_lambda = os.getenv("WRANGLER_NAME")
+        self.responses = {}
 
     def get_qcode_resp_from_db(self):
 
@@ -50,18 +51,22 @@ class DataPrep:
                           FROM dev01.response 
                           WHERE reference = %s AND period = %s AND survey = %s """,
                           (self.reference, self.period, self.survey))
-            record = connection.fetchall()
+            return connection.fetchall()
 
+    def construct_response(self, responses):
             qcode_resps = []
-            for row in record:
+            for row in responses:
                 qcode_resps.append({self.questionCode: row[0], self.response: row[1]})
-            self.event.update({'responses': qcode_resps})
+            self.responses['responses'] = qcode_resps
+
+    def construct_metadata(self):
+        for datum in self.event.keys():
+            self.responses[datum] = self.event[datum]
 
     def send_data_to_wrangler(self):
         try:
             lambda_client.invoke(FunctionName="function:" + self.wrangler_lambda,
-                                InvocationType='Event',
-                                Payload=json.dumps(self.event))
+                                 InvocationType='Event',
+                                 Payload=json.dumps(self.event))
         except:
             logger.error("Error while calling wrangler-lambda")
-
