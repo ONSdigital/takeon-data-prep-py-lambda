@@ -9,7 +9,9 @@ def run_data_prep(event, context):
 
     print(event)
     dataprep = DataPrep(event)
-    dataprep.get_qcode_resp_from_db()
+    records = dataprep.get_qcode_resp_from_db()
+    dataprep.construct_response(records)
+    dataprep.construct_metadata()
     print("Attempting to invoke Wrangler Lambda with the json string: " + str(event))
     dataprep.send_data_to_wrangler()
 

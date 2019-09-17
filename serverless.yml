@@ -1,34 +1,18 @@
-# Modified this file for takeon-data-prep-py-lambda
-# For full config options, check the docs:
-#    docs.serverless.com
+service: TakeOn-DataPreporator 
 
+plugins:
+  serverless-python-requirements
 
-service: takeon-data-prep-py-lambda
+custom:
+    pythonRequirements:
+      dockerizePip: linux
+      slim: true
 
 provider:
   name: aws
   runtime: python3.7
-  profile: sls-admin
+  stage: dev
   region: eu-west-2
-
-functions:
-  run_data_prep:
-    handler: handler.run_data_prep
-    role: ${file(./config.dev.json):ROLE}
-    layers:
-      - ${file(./config.dev.json):LAYER_NAME}
-    environment:
-      DATABASE_USER: ${file(./config.dev.json):DB_USER}
-      DATABASE_PASSWORD: ${file(./config.dev.json):DB_PW}
-      DATABASE_HOST: ${file(./config.dev.json):DB_HOST}
-      DATABASE_NAME: ${file(./config.dev.json):DB_NAME}
-      WRANGLER_NAME: wrangler-lambda
-    vpc:
-      securityGroupIds:
-        - ${file(./config.dev.json):SECURITY_GROUP_ID}
-      subnetIds:
-        - ${file(./config.dev.json):SUBNET_ID}
-    timeout: 30
 
 package:
   exclude:
@@ -38,6 +22,6 @@ package:
   - test/**
   - Docs/**
 
-
-
-
+functions:
+  collate:
+    handler: handler.run_data_prep

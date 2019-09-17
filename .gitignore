@@ -1,0 +1,9 @@
+### python stuff ###
+
+venv/
+### text files ###
+
+.vscode
+### serverless ###
+
+.serverless
